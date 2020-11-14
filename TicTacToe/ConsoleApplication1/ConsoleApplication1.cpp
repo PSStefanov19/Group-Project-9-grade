@@ -13,6 +13,8 @@ using namespace std;
 */
 
 char GameBoard[9][9];
+char playerInput;
+int playerTurn = 0;
 
 //Use for coloring everything in console with SetConsoleTextAttribute()
 HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -46,17 +48,21 @@ void Title()
 	SetConsoleTextAttribute(handle, 15);
 }
 
-//Draw Board
-void DrawBoard() 
+
+void startGame() 
 {
 	//Fill board with blank spaces
-	for (int y = 0; y < 9; y++) 
+	for (int y = 0; y < 9; y++)
 	{
-		for (int x = 0; x < 9; x++) 
+		for (int x = 0; x < 9; x++)
 		{
 			GameBoard[y][x] = ' ';
 		}
 	}
+}
+//Draw Board
+void DrawBoard() 
+{
 	for (int y = 0; y < 9; y++)
 	{	
 		//Center board a little bit
@@ -65,18 +71,28 @@ void DrawBoard()
 		{	
 			//Draw board and vertical lines that devide squares
 			SetConsoleTextAttribute(handle, 119);
+			if (GameBoard[y][x] == 'x')
+			{
+				SetConsoleTextAttribute(handle, 204);
+				cout << GameBoard[y][x] << " ";
+			}
+			else if (GameBoard[y][x] == 'o')
+			{
+				SetConsoleTextAttribute(handle, 170);
+				cout << GameBoard[y][x] << " ";
+			}
+			else
+			{
+				SetConsoleTextAttribute(handle, 119);
+				cout << GameBoard[y][x] << " ";
+			}
 			if ((x+1) % 3 == 0 && x+1 != 9) 
 			{
-				cout << GameBoard[y][x]<<" ";
 				SetConsoleTextAttribute(handle, 136);
 				cout << "  ";
 			}
-			else 
-			{
-				cout << GameBoard[y][x] << " ";
-			}
 		}
-		// Draw horizontal lines that devide squares
+		 //Draw horizontal lines that devide squares
 		if ((y + 1) % 3 == 0 && (y + 1) != 9) 
 		{
 			SetConsoleTextAttribute(handle, 15);
@@ -90,6 +106,126 @@ void DrawBoard()
 	}
 }
 
+void toO(int Oy, int Ox) 
+{
+	GameBoard[Oy][Ox + 1] = 'o';
+	GameBoard[Oy + 1][Ox] = 'o';
+	GameBoard[Oy + 2][Ox + 1] = 'o';
+	GameBoard[Oy + 1][Ox + 2] = 'o';
+	playerTurn--;
+}
+
+void toX(int Xy, int Xx) 
+{
+	GameBoard[Xy][Xx] = 'x';
+	GameBoard[Xy][Xx + 2] = 'x';
+	GameBoard[Xy + 2][Xx] = 'x';
+	GameBoard[Xy + 1][Xx + 1] = 'x';
+	GameBoard[Xy + 2][Xx + 2] = 'x';
+	playerTurn++;
+}
+
+void Input() 
+{
+	if (_kbhit) 
+	{
+		switch (_getch()) 
+		{
+		case '1':
+			if (playerTurn == 0)
+			{
+				toX(6, 0);
+			}
+			else
+			{
+				toO(6, 0);
+			}
+			break;
+		case '2':
+			if (playerTurn == 0)
+			{
+				toX(6, 3);
+			}
+			else
+			{
+				toO(6, 3);
+			}
+			break;
+		case '3':
+			if (playerTurn == 0)
+			{
+				toX(6, 6);
+			}
+			else
+			{
+				toO(6, 6);
+			}
+			break;
+		case '4':
+			if (playerTurn == 0)
+			{
+				toX(3, 0);
+			}
+			else
+			{
+				toO(3, 0);
+			}
+			break;
+		case '5':
+			if (playerTurn == 0)
+			{
+				toX(3, 3);
+			}
+			else
+			{
+				toO(3, 3);
+			}
+			break;
+		case '6':
+			if (playerTurn == 0)
+			{
+				toX(3, 6);
+			}
+			else
+			{
+				toO(3, 6);
+			}
+			break;
+		case '7':
+			if (playerTurn == 0) 
+			{
+				toX(0,0);
+			}
+			else
+			{
+				toO(0,0);
+			}
+			break;
+		case '8':
+			if (playerTurn == 0)
+			{
+				toX(0, 3);
+			}
+			else
+			{
+				toO(0, 3);
+			}
+			break;
+		case '9':
+			if (playerTurn == 0)
+			{
+				toX(0, 6);
+			}
+			else
+			{
+				toO(0, 6);
+			}
+			break;
+		}
+	}
+}
+
+
 /*	
 	=============
 	Main Function
@@ -100,9 +236,11 @@ int main()
 	Title();
 	//Clear screen after title is shown
 	system("cls");
+	startGame();
 	while (true)
 	{
 		DrawBoard();
+		Input();
 		system("cls");
 	}
 	//Return to default console colors
