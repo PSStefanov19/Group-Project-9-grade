@@ -1,15 +1,13 @@
 #include <iostream>
-//Use for clearing screen 
 #include <windows.h>
-//Use for getting input with kbhit and getch()
 #include <conio.h>
-//Standard namespace;
+#include <string>
 using namespace std;
 
 /*
-	================
-	Global Variables
-	================
+	==================================================
+					Global Variables
+	==================================================
 */
 
 char GameBoard[9][9];
@@ -21,34 +19,95 @@ HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
 
 /* 
-	==================
-	Functions for game
-	==================
+	==================================================
+					Functions for game
+	==================================================
 */
 
-//Display Title
+//Display Title and menu
 void Title()
 {
-	//Color title to blue with black background
-	SetConsoleTextAttribute(handle, 3);
-	//Ascii art for title
-	cout << "    _______ _          _______             _______			 " << endl;
-	Sleep(75);
-	cout << "   |__   __(_)        |__   __|           |__   __|		 " << endl;
-	Sleep(75);
-	cout << "      | |   _  ___ ______| | __ _  ___ ______| | ___   ___	 " << endl;
-	Sleep(75);
-	cout << "      | |  | |/ __|______| |/ _` |/ __|______| |/ _ \\ / _ \\ " << endl;
-	Sleep(75);
-	cout << "      | |  | | (__       | | (_| | (__       | | (_) |  __/ " << endl;
-	Sleep(75);
-	cout << "      |_|  |_|\\___|      |_|\\__,_|\\___|      |_|\\___/ \\___| " << endl;
-	cout << endl;
-	//Return to default console colors 
-	SetConsoleTextAttribute(handle, 15);
+	string sentances[2] = { "Play against another human" , "Rules & Controls" };
+	int arrow = 0;
+	bool chosen = true;
+	while (chosen) 
+	{
+		//Color title to blue with black background
+		SetConsoleTextAttribute(handle, 3);
+		//Ascii art for title
+		cout << "    _______ _          _______             _______			 " << endl;
+		cout << "   |__   __(_)        |__   __|           |__   __|		 " << endl;
+		cout << "      | |   _  ___ ______| | __ _  ___ ______| | ___   ___	 " << endl;
+		cout << "      | |  | |/ __|______| |/ _` |/ __|______| |/ _ \\ / _ \\ " << endl;
+		cout << "      | |  | | (__       | | (_| | (__       | | (_) |  __/ " << endl;
+		cout << "      |_|  |_|\\___|      |_|\\__,_|\\___|      |_|\\___/ \\___| " << endl;
+		cout << endl;
+		SetConsoleTextAttribute(handle, 10);
+		//Menu for game
+		cout << "Choose what you want to play(Use W, S and Space):" << endl;
+		if (arrow == 0)
+		{
+			cout << "->";
+		}
+		cout << '\t' <<sentances[0] << endl;
+		if (arrow == 1)
+		{
+			cout << "->";
+		}
+		cout << '\t' <<sentances[1] << endl;
+		//Selection of play or rules page
+		if (_kbhit) 
+		{
+			switch (_getch()) 
+			{
+				case 'w':
+					if (arrow == 0) 
+					{
+						cout << "Already at top" << endl;
+						Sleep(20);
+					}
+					else 
+					{
+						arrow--;
+					}
+					break;
+				case 's':
+					if (arrow == 1) 
+					{
+						cout << "Already at bottom" << endl;
+						Sleep(20);
+					}
+					else 
+					{
+						arrow++;
+					}
+					break;
+				case ' ':
+					if (arrow == 0) 
+					{
+						chosen = false;
+					}
+					else 
+					{
+						system("cls");
+						cout << "\tControls" << endl;
+						cout << "Preferably this game uses the NumPad" << endl;
+						cout << "So 7 corresponds to the top left cell of the gameboard and so on" << endl;
+						cout << "\tRules" << endl;
+						cout << " 1. The game is played on a grid that's 3 squares by 3 squares." << endl;
+						cout << " 2. You are X, your friend (or the computer in this case) is O.\n   Players take turns putting their marks in empty squares." << endl;
+						cout << " 3. The first player to get 3 of her marks in a row(up, down, across, or diagonally) is the winner." << endl;
+						cout << " 4. When all 9 squares are full, the game is over.If no player has 3 marks in a row, the game ends in a tie. " << endl;
+						system("pause");
+					}
+					break;
+			}
+		}
+		system("cls");
+	}
 }
 
-
+//Fill board with blank spaces 
 void startGame() 
 {
 	//Fill board with blank spaces
@@ -60,6 +119,7 @@ void startGame()
 		}
 	}
 }
+
 //Draw Board
 void DrawBoard() 
 {
@@ -106,6 +166,7 @@ void DrawBoard()
 	}
 }
 
+//Turn cell to O
 void toO(int Oy, int Ox) 
 {
 	GameBoard[Oy][Ox + 1] = 'o';
@@ -115,6 +176,7 @@ void toO(int Oy, int Ox)
 	playerTurn--;
 }
 
+//Turn cell to X
 void toX(int Xy, int Xx) 
 {
 	GameBoard[Xy][Xx] = 'x';
@@ -125,6 +187,7 @@ void toX(int Xy, int Xx)
 	playerTurn++;
 }
 
+//Get input and change cells according to player turn
 void Input() 
 {
 	if (_kbhit) 
@@ -227,9 +290,9 @@ void Input()
 
 
 /*	
-	=============
-	Main Function
-	=============
+	==================================================
+						Main Function
+	==================================================
 */
 int main() 
 {
