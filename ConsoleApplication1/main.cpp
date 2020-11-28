@@ -197,124 +197,141 @@ void input()
 		{
 			//First row
 		case '7':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[0]==' ')
 			{
 				winCondition[0] = 'X';
+				playerTurn++;
 				toX(0, 0);
 			}
-			else
+			else if (playerTurn == 1 && winCondition[0] == ' ')
 			{
 				winCondition[0] = '0';
+				playerTurn--;
 				toO(0, 0);
 			}
 			break;
 		case '8':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[1] == ' ')
 			{
 				winCondition[1] = 'X';
+				playerTurn++;
 				toX(0, 3);
 			}
-			else
+			else if (playerTurn == 1 && winCondition[1] == ' ')
 			{
 				winCondition[1] = '0';
+				playerTurn--;
 				toO(0, 3);
 			}
 			break;
 		case '9':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[2] == ' ')
 			{
 				winCondition[2] = 'X';
+				playerTurn++;
 				toX(0, 6);
 			}
-			else
+			else if (playerTurn == 1 && winCondition[2] == ' ')
 			{
 				winCondition[2] = '0';
+				playerTurn--;
 				toO(0, 6);
 			}
 			break;
 			//Second row
 		case '4':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[3] == ' ')
 			{
 				winCondition[3] = 'X';
+				playerTurn++;
 				toX(3, 0);
 			}
-			else
+			else if (playerTurn == 1 && winCondition[3] == ' ')
 			{
 				winCondition[3] = '0';
+				playerTurn--;
 				toO(3, 0);
 				
 			}
 			break;
 		case '5':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[4] == ' ')
 			{
 				winCondition[4] = 'X';
+				playerTurn++;
 				toX(3, 3);
 				
 			}
-			else
+			else if (playerTurn == 1 && winCondition[4] == ' ')
 			{
 				winCondition[4] = '0';
+				playerTurn--;
 				toO(3, 3);
 				
 			}
 			break;
 		case '6':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[5] == ' ')
 			{
 				winCondition[5] = 'X';
+				playerTurn++;
 				toX(3, 6);
 				
 			}
-			else
+			else if (playerTurn == 1 && winCondition[5] == ' ')
 			{
 				winCondition[5] = '0';
+				playerTurn--;
 				toO(3, 6);
 				
 			}
 			break;
 			//Third row
 		case '1':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[6] == ' ')
 			{
 				winCondition[6] = 'X';
+				playerTurn++;
 				toX(6, 0);
 				
 			}
-			else
+			else if (playerTurn == 1 && winCondition[6] == ' ')
 			{
 				winCondition[6] = '0';
+				playerTurn--;
 				toO(6, 0);
 				
 			}
 			break;
 		case '2':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[7] == ' ')
 			{
 				winCondition[7] = 'X';
+				playerTurn++;
 				toX(6, 3);
 				
 			}
-			else
+			else if (playerTurn == 1 && winCondition[7] == ' ')
 			{
 				winCondition[7] = '0';
+				playerTurn--;
 				toO(6, 3);
 				
 			}
 			break;
 		case '3':
-			if (playerTurn == 0)
+			if (playerTurn == 0 && winCondition[8] == ' ')
 			{
 				winCondition[8] = 'X';
+				playerTurn++;
 				toX(6, 6);
 				
 			}
-			else
+			else if (playerTurn == 1 && winCondition[8] == ' ')
 			{	
 				winCondition[8] = '0';
+				playerTurn--;
 				toO(6, 6);
-				
 			}
 			break;
 		}
@@ -371,8 +388,6 @@ int main()
 		drawBoard();
 		input();
 		system("cls");
-		if (playerTurn == 0)playerTurn++;
-		else playerTurn--;
 	}while (checkWin() == 'c');
 	//Return to default console colors
 	SetConsoleTextAttribute(handle, 15);
